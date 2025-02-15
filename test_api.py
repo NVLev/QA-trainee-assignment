@@ -224,11 +224,17 @@ def test_get_items_nonexistent_seller_id(base_url):
 
     # Если статус 404 - проверяем сообщение
     elif response.status_code == 404:
-        assert "message" in response.json(), "В ответе должно быть сообщение об ошибке"
+        assert "message" in response.json()
 
     # 5. Если получен неожиданный статус - тест падает
     else:
         pytest.fail(f"Неожиданный статус: {response.status_code}")
+# Попытка получения объявлений с некорректным форматом sellerID (TC-3.2.2)
+def test_get_item_invalid_sellerid(base_url):
+    seller_id = "invalid_sellerid_type"
+    response = requests.get(f"{base_url}/{seller_id}/item")
+    assert response.status_code == 400
+    assert "message" in response.json()["result"]
 
 # Тест для получения статистики по объявлению (TC-4.1.1)
 def test_get_statistics_by_item_id(base_url):
