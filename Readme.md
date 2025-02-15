@@ -9,7 +9,7 @@
 
 1.  Склонируйте репозиторий:
     ```bash
-    git clone <your_repository_url>
+    git clone https://github.com/NVLev/QA-trainee-assignment.git
     ```
 2.  Перейдите в директорию проекта:
     ```bash

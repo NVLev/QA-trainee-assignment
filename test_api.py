@@ -56,12 +56,34 @@ def test_create_item_missing_price(base_url):
     assert response.status_code == 400
     assert "message" in response.json()
 
-# Тест для попытки создания объявления с некорректным типом данных (TC-1.2.2)
-def test_create_item_invalid_data_types(base_url):
+# Тест для попытки создания объявления с некорректным типом данных id (TC-1.2.2.1)
+def test_create_item_invalid_id_type(base_url):
     payload = {
         "sellerID": "invalid_id",
         "name": "Test Item",
         "price": 1000
+    }
+    response = requests.post(f"{base_url}/item", json=payload)
+    assert response.status_code == 400
+    assert "messages" in response.json()["result"]
+
+# Тест для попытки создания объявления с некорректным типом данных name (TC-1.2.2,2)
+def test_create_item_invalid_name_type(base_url):
+    payload = {
+        "sellerID": 1296548,
+        "name": 1,
+        "price": 1000
+    }
+    response = requests.post(f"{base_url}/item", json=payload)
+    assert response.status_code == 400
+    assert "messages" in response.json()["result"]
+
+# Тест для попытки создания объявления с некорректным типом данных name (TC-1.2.2,3)
+def test_create_item_invalid_price_type(base_url):
+    payload = {
+        "sellerID": 1296548,
+        "name": "Valid Name",
+        "price": "invalid price"
     }
     response = requests.post(f"{base_url}/item", json=payload)
     assert response.status_code == 400
